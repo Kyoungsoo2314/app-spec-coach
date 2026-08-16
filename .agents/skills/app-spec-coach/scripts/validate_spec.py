@@ -114,8 +114,9 @@ class Validator:
             "구현 승인",
             "NOT RUN",
             "호출 가능한 이미지 생성 capability",
-            "같은 턴에 실제 이미지 생성 도구를 호출",
-            "초보자용 시각 checkpoint",
+            "같은 턴에 실제로 호출하고 결과를 보여준다",
+            "메뉴·화면·대시보드·필수 정보 논의",
+            "최종 시안 제안",
         ):
             self.check(marker in body, f"SKILL.md contains behavior: {marker}")
 
@@ -129,13 +130,13 @@ class Validator:
 
         checks = {
             "locked status": bool(re.search(r"^status:\s*locked\s*$", text, re.MULTILINE)),
-            "spec version": bool(re.search(r"^spec_version:\s*1\.1\s*$", text, re.MULTILINE)),
-            "locked heading": "LOCKED SPEC v1.1" in text,
+            "spec version": bool(re.search(r"^spec_version:\s*1\.2\s*$", text, re.MULTILINE)),
+            "locked heading": "LOCKED SPEC v1.2" in text,
             "interview contract": "## 6. 인터뷰 계약" in text,
             "image contract": "## 9. 화면·이미지 계약" in text,
             "verification statuses": all(token in text for token in ("PASS", "FAIL", "NOT RUN", "BLOCKED")),
             "v1 non-goal": "독립 Windows/Mac 앱" in text,
-            "beginner visual checkpoint": "초보자 시각 checkpoint" in text,
+            "final visual offer": "최종 시안" in text and "동의" in text,
         }
         for label, condition in checks.items():
             self.check(condition, f"SPEC has {label}")
