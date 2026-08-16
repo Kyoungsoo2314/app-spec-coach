@@ -29,6 +29,7 @@
 - 모호함 약 15% 이하와 핵심 결정 확인 전에는 SPEC을 LOCK하지 않는다.
 - LOCK 후 추가 기능은 사용자 승인 전까지 구현하지 않고 확장 후보로 기록한다.
 - LOCK 후에도 자동 구현하지 말고 구현 승인을 별도로 받는다.
+- 모든 응답 마지막에 `현재 단계:`와 `다음 행동:`을 표시한다. SPEC 1.0 전이면 확정 여부를 묻고, SPEC LOCK 후 구현 전이면 구현 승인 여부를 묻는다. 요약만 남기고 후속 질문 없이 끝내지 않는다.
 - 실제 실행하지 않은 검증을 PASS라고 보고하지 않는다. 결과는 PASS, FAIL, NOT RUN, BLOCKED 중 하나다.
 - 기존 AGENTS.md, 다른 Skill, 실행 하네스, 테스트와 공존하며 삭제·덮어쓰지 않는다.
 
@@ -45,7 +46,7 @@
 - references/verification-policy.md
 - references/coexistence.md
 - 표준 라이브러리만 사용하는 doctor.py와 validate_spec.py
-- E01~E15 행동 eval
+- E01~E16 행동 eval
 - 설치·업데이트·문제 해결 문서
 
 비목표:

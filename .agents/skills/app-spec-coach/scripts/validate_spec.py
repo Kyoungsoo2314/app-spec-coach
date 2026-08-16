@@ -117,6 +117,8 @@ class Validator:
             "같은 턴에 실제로 호출하고 결과를 보여준다",
             "메뉴·화면·대시보드·필수 정보 논의",
             "최종 시안 제안",
+            "현재 단계",
+            "다음 행동",
         ):
             self.check(marker in body, f"SKILL.md contains behavior: {marker}")
 
@@ -130,13 +132,14 @@ class Validator:
 
         checks = {
             "locked status": bool(re.search(r"^status:\s*locked\s*$", text, re.MULTILINE)),
-            "spec version": bool(re.search(r"^spec_version:\s*1\.2\s*$", text, re.MULTILINE)),
-            "locked heading": "LOCKED SPEC v1.2" in text,
+            "spec version": bool(re.search(r"^spec_version:\s*1\.3\s*$", text, re.MULTILINE)),
+            "locked heading": "LOCKED SPEC v1.3" in text,
             "interview contract": "## 6. 인터뷰 계약" in text,
             "image contract": "## 9. 화면·이미지 계약" in text,
             "verification statuses": all(token in text for token in ("PASS", "FAIL", "NOT RUN", "BLOCKED")),
             "v1 non-goal": "독립 Windows/Mac 앱" in text,
             "final visual offer": "최종 시안" in text and "동의" in text,
+            "terminal handoff": "현재 단계" in text and "다음 행동" in text,
         }
         for label, condition in checks.items():
             self.check(condition, f"SPEC has {label}")
@@ -145,7 +148,7 @@ class Validator:
         text = self.read("IMPLEMENTATION_CONTRACT.md")
         if text is None:
             return
-        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "AC-13", "PASS", "NOT RUN", "BLOCKED"):
+        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "AC-13", "AC-14", "PASS", "NOT RUN", "BLOCKED"):
             self.check(marker in text, f"implementation contract contains {marker}")
 
     def validate_evals(self) -> None:
@@ -153,8 +156,8 @@ class Validator:
         if text is None:
             return
         ids = re.findall(r"^  - id:\s*(E\d{2})\s*$", text, re.MULTILINE)
-        expected = [f"E{i:02d}" for i in range(1, 16)]
-        self.check(ids == expected, f"eval IDs are E01-E15 ({', '.join(ids)})")
+        expected = [f"E{i:02d}" for i in range(1, 17)]
+        self.check(ids == expected, f"eval IDs are E01-E16 ({', '.join(ids)})")
         self.check("must_not" in text, "evals include negative behavior")
         self.check("action_contract" in text, "evals use action contracts")
         self.check("must_call_image_capability" in text, "evals require an image capability call")
