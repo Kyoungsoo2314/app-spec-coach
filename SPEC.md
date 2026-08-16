@@ -1,11 +1,11 @@
 ---
 status: locked
-spec_version: 1.0
+spec_version: 1.1
 product: app-spec-coach
 product_form: codex-skill
 ---
 
-# 앱 명세 코치 — LOCKED SPEC v1.0
+# 앱 명세 코치 — LOCKED SPEC v1.1
 
 ## 1. 제품 정의
 
@@ -46,7 +46,7 @@ AMBIGUITY REDUCTION
   ↓
 WORKFLOW / MENU / SCREEN REVIEW
   ↓
-OPTIONAL VISUAL REVIEW
+BEGINNER VISUAL CHECKPOINT
   ↓
 SPEC DRAFT
   ↓
@@ -121,7 +121,7 @@ VERIFY
 
 메뉴는 업무 흐름에서 도출한다. 입력 화면만 있고 저장 후 찾기·상세·수정·삭제 상태가 없으면 화면 설계가 불완전한 것으로 표시한다.
 
-이미지 검토는 업무 흐름과 핵심 화면이 정리된 뒤, 실제 판단에 도움이 될 때만 제안한다. 사용자가 동의하면 현재 환경의 이미지 생성 capability를 사용하거나 사용 가능한 Skill을 호출한다. 특정 이미지 모델 ID는 고정하지 않는다.
+초보자·처음 사용하는 사용자는 이미지 기능을 먼저 요청하지 않아도 된다. 업무 흐름과 핵심 화면이 정리되면 최종 SPEC 1.0 확정 전에 시각 checkpoint를 기본으로 진행한다. 호출 가능한 이미지 capability가 있으면 같은 턴에 실제 이미지를 생성해 보여주고, 이미지 capability가 없거나 사용자가 명시적으로 건너뛰면 `NOT RUN` 또는 `SKIPPED`를 기록한다. 특정 이미지 모델 ID는 고정하지 않는다.
 
 이미지는 디자인 참고자료이며, 이미지에만 등장한 버튼·카드·통계·필드·상태는 요구사항이 아니다. 이미지와 SPEC이 충돌하면 SPEC을 따른다. 이미지 생성 실패는 인터뷰·SPEC 진행을 중단시키지 않는다.
 
@@ -136,6 +136,7 @@ VERIFY
 - MVP와 비목표 구분
 - 성공 기준이 검증 가능
 - 구현 형태 결정
+- 초보자 시각 checkpoint 완료 또는 생략 사유 기록
 - 사용자 판단이 필요한 핵심 미확정 사항 없음
 - 모호함 약 15% 이하
 
@@ -175,6 +176,6 @@ SPEC LOCK 뒤에도 자동으로 구현을 시작하지 않고 다음 의미로 
 6. 업무 흐름에서 최소 메뉴·화면을 도출한다.
 7. 구조화된 SPEC과 구현 계약을 만든다.
 8. 실제로 실행하지 않은 검증을 PASS로 보고하지 않는다.
-9. 이미지 capability 없이도 핵심 흐름이 완료된다.
-10. 특정 모델 ID가 핵심 동작에 하드코딩되지 않는다.
-
+9. 초보자에게 SPEC 1.0 확정 전에 핵심 화면 이미지를 보여준다.
+10. 이미지 capability 없이도 핵심 흐름이 완료된다.
+11. 특정 모델 ID가 핵심 동작에 하드코딩되지 않는다.

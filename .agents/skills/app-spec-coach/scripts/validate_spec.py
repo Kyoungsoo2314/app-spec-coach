@@ -113,7 +113,9 @@ class Validator:
             "SPEC LOCK",
             "구현 승인",
             "NOT RUN",
-            "현재 환경의 이미지 생성 capability",
+            "호출 가능한 이미지 생성 capability",
+            "같은 턴에 실제 이미지 생성 도구를 호출",
+            "초보자용 시각 checkpoint",
         ):
             self.check(marker in body, f"SKILL.md contains behavior: {marker}")
 
@@ -127,12 +129,13 @@ class Validator:
 
         checks = {
             "locked status": bool(re.search(r"^status:\s*locked\s*$", text, re.MULTILINE)),
-            "spec version": bool(re.search(r"^spec_version:\s*1\.0\s*$", text, re.MULTILINE)),
-            "locked heading": "LOCKED SPEC v1.0" in text,
+            "spec version": bool(re.search(r"^spec_version:\s*1\.1\s*$", text, re.MULTILINE)),
+            "locked heading": "LOCKED SPEC v1.1" in text,
             "interview contract": "## 6. 인터뷰 계약" in text,
             "image contract": "## 9. 화면·이미지 계약" in text,
             "verification statuses": all(token in text for token in ("PASS", "FAIL", "NOT RUN", "BLOCKED")),
             "v1 non-goal": "독립 Windows/Mac 앱" in text,
+            "beginner visual checkpoint": "초보자 시각 checkpoint" in text,
         }
         for label, condition in checks.items():
             self.check(condition, f"SPEC has {label}")
@@ -141,7 +144,7 @@ class Validator:
         text = self.read("IMPLEMENTATION_CONTRACT.md")
         if text is None:
             return
-        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "PASS", "NOT RUN", "BLOCKED"):
+        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "AC-13", "PASS", "NOT RUN", "BLOCKED"):
             self.check(marker in text, f"implementation contract contains {marker}")
 
     def validate_evals(self) -> None:
@@ -149,10 +152,11 @@ class Validator:
         if text is None:
             return
         ids = re.findall(r"^  - id:\s*(E\d{2})\s*$", text, re.MULTILINE)
-        expected = [f"E{i:02d}" for i in range(1, 15)]
-        self.check(ids == expected, f"eval IDs are E01-E14 ({', '.join(ids)})")
+        expected = [f"E{i:02d}" for i in range(1, 16)]
+        self.check(ids == expected, f"eval IDs are E01-E15 ({', '.join(ids)})")
         self.check("must_not" in text, "evals include negative behavior")
         self.check("action_contract" in text, "evals use action contracts")
+        self.check("must_call_image_capability" in text, "evals require an image capability call")
 
     def validate_model_policy(self) -> None:
         paths = [
