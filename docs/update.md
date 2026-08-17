@@ -11,7 +11,7 @@ Get-Content -LiteralPath VERSION -Encoding UTF8
 ## Codex에 업데이트 요청
 
 ```text
-내 app-spec-coach Skill을 이 GitHub 저장소의 최신 버전으로 업데이트해줘.
+내 앱 기획 스킬(app-spec-coach)을 이 GitHub 저장소의 최신 버전으로 업데이트해줘.
 저장소 주소는 GitHub에 공개한 app-spec-coach 저장소 주소야.
 ```
 

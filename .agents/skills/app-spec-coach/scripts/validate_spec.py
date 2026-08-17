@@ -109,6 +109,8 @@ class Validator:
 
         for marker in (
             "명세가 부족한 신규 앱 요청",
+            "앱 기획해 보자",
+            "앱 기획 스킬",
             "모호함",
             "SPEC LOCK",
             "구현 승인",
@@ -134,8 +136,9 @@ class Validator:
 
         checks = {
             "locked status": bool(re.search(r"^status:\s*locked\s*$", text, re.MULTILINE)),
-            "spec version": bool(re.search(r"^spec_version:\s*1\.4\s*$", text, re.MULTILINE)),
-            "locked heading": "LOCKED SPEC v1.4" in text,
+            "spec version": bool(re.search(r"^spec_version:\s*1\.5\s*$", text, re.MULTILINE)),
+            "locked heading": "LOCKED SPEC v1.5" in text,
+            "display name": "display_name: \"앱 기획 스킬\"" in text,
             "interview contract": "## 6. 인터뷰 계약" in text,
             "image contract": "## 9. 화면·이미지 계약" in text,
             "verification statuses": all(token in text for token in ("PASS", "FAIL", "NOT RUN", "BLOCKED")),
@@ -151,7 +154,7 @@ class Validator:
         text = self.read("IMPLEMENTATION_CONTRACT.md")
         if text is None:
             return
-        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "AC-13", "AC-14", "AC-15", "PASS", "NOT RUN", "BLOCKED"):
+        for marker in ("AC-01", "AC-04", "AC-08", "AC-10", "AC-12", "AC-13", "AC-14", "AC-15", "AC-16", "PASS", "NOT RUN", "BLOCKED"):
             self.check(marker in text, f"implementation contract contains {marker}")
 
     def validate_evals(self) -> None:
@@ -159,8 +162,8 @@ class Validator:
         if text is None:
             return
         ids = re.findall(r"^  - id:\s*(E\d{2})\s*$", text, re.MULTILINE)
-        expected = [f"E{i:02d}" for i in range(1, 18)]
-        self.check(ids == expected, f"eval IDs are E01-E17 ({', '.join(ids)})")
+        expected = [f"E{i:02d}" for i in range(1, 19)]
+        self.check(ids == expected, f"eval IDs are E01-E18 ({', '.join(ids)})")
         self.check("must_not" in text, "evals include negative behavior")
         self.check("action_contract" in text, "evals use action contracts")
         self.check("must_call_image_capability" in text, "evals require an image capability call")
